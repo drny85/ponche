@@ -7,7 +7,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS, images, icons } from "../constants";
 import { Favorites, Home, Orders } from "../screens";
 import { View, Image } from "react-native";
-import { HomeStack } from "../navigation";
+import HomeStack from "../navigation/HomeStacks";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +25,7 @@ const Tabs = () => {
                 <MaterialIcons name='favorite' size={size} color={tintColor} />
               );
 
-            case "Home":
+            case "Main":
               return <Entypo name='home' size={size} color={tintColor} />;
 
             case "Orders":
@@ -43,7 +43,11 @@ const Tabs = () => {
         },
       })}
     >
-      <Tab.Screen name='Home' component={HomeStack} />
+      <Tab.Screen
+        name='Main'
+        component={HomeStack}
+        options={{ tabBarLabel: "Home" }}
+      />
       <Tab.Screen name='Favorites' component={Favorites} />
       <Tab.Screen name='Orders' component={Orders} />
     </Tab.Navigator>
