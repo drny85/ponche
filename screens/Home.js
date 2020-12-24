@@ -26,9 +26,7 @@ const Home = ({ navigation }) => {
     <Screen style={styles.container}>
       {/* Header */}
       <View style={styles.headerView}>
-        <TouchableOpacity style={styles.cartView}>
-          <MaterialCommunityIcons name='cart-outline' size={30} color='black' />
-        </TouchableOpacity>
+       
         <TouchableOpacity style={styles.cartView}>
           <MaterialCommunityIcons name='cart-outline' size={30} color='black' />
         </TouchableOpacity>
@@ -43,15 +41,15 @@ const Home = ({ navigation }) => {
             alignContent: "center",
           }}
           data={products}
-          ItemSeparatorComponent={() => (
-            <View
-              style={{
-                height: 1,
-                backgroundColor: COLORS.light,
-                width: SIZES.width,
-              }}
-            ></View>
-          )}
+          // ItemSeparatorComponent={() => (
+          //   <View
+          //     style={{
+          //       height: 1,
+          //       backgroundColor: COLORS.light,
+          //       width: SIZES.width,
+          //     }}
+          //   ></View>
+          // )}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <ProductCard
@@ -83,6 +81,9 @@ const styles = StyleSheet.create({
     elevation: 11,
     backgroundColor: COLORS.light,
     justifyContent: "center",
+    position:'absolute',
+    right: 20,
+    top: 10,
     alignItems: "center",
   },
   title: {

@@ -4,27 +4,32 @@ import { COLORS, SIZES } from "../constants";
 
 import { AntDesign } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
+import { color } from "react-native-reanimated";
+
 
 const ProductDetails = ({ route, navigation }) => {
   const { product } = route.params;
-  const [price, setPrice] = useState();
-  const [];
-  const sizeHandler = (size) => {
-    if (size === "m") {
-      setPrice(product.price.medium);
+  const [price, setPrice] = useState(product.price?.large);
+  const [isFavorite, setIsFavorite] = useState(false)
+  const [size, setSize] = useState('large')
+  const sizeHandler = (s) => {
+    if (s === "m") {
+      setPrice(product.price?.medium);
+      setSize('medium')
     }
-    if (size === "l") {
+    if (s === "l") {
       setPrice(product.price?.large);
+      setSize('large')
     }
   };
 
   const addToCart = () => {
-    121;
+    
     console.log("Add to cart pressed");
   };
   useEffect(() => {
     setPrice(product.price?.large);
-  }, []);
+  }, [product]);
 
   return (
     <View style={styles.container}>
@@ -47,19 +52,23 @@ const ProductDetails = ({ route, navigation }) => {
           <EvilIcons name='close' size={30} color='black' />
         </TouchableOpacity>
         <Image source={product.image} style={styles.img} />
+        <View style={{position: 'absolute', bottom: 10, paddingHorizontal: SIZES.padding, flexDirection: 'row', justifyContent:'space-between', alignItems:'center', width:SIZES.width}}>
         <Text
           style={{
             fontSize: 26,
             color: COLORS.white,
-            position: "absolute",
-            bottom: 10,
-            right: 25,
             letterSpacing: 1.1,
             fontWeight: "700",
           }}
         >
           {product.name}
         </Text>
+        <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)}>
+          {isFavorite ? ( <AntDesign name="heart" size={30} color={COLORS.primary} />) : (<AntDesign name="hearto" size={30} color={COLORS.white} />)}
+       
+        </TouchableOpacity>
+        </View>
+        
       </View>
       {/* Rating and price */}
       <View style={styles.price}>
@@ -74,11 +83,13 @@ const ProductDetails = ({ route, navigation }) => {
               fontWeight: "700",
               fontSize: 20,
               paddingRight: 8,
+              fontStyle: product.rating ? 'normal' : 'italic',
+              color: product.rating ? 'black' : COLORS.lightGray,
             }}
           >
-            4
+            {product.rating ? product.rating : 'no reviews yet'}
           </Text>
-          <AntDesign name='star' size={24} color={COLORS.primary} />
+         {product.rating && (<AntDesign name='star' size={24} color={COLORS.primary} />)} 
         </View>
 
         <Text style={{ fontSize: 20, fontWeight: "700" }}>${price}</Text>
@@ -89,7 +100,7 @@ const ProductDetails = ({ route, navigation }) => {
           style={{
             borderTopLeftRadius: SIZES.radius * 3,
             borderBottomLeftRadius: SIZES.radius * 3,
-            backgroundColor: "red",
+            backgroundColor: size === 'medium' ? COLORS.primary : COLORS.light,
             height: 35,
             justifyContent: "center",
             alignItems: "center",
@@ -105,7 +116,7 @@ const ProductDetails = ({ route, navigation }) => {
           style={{
             borderBottomRightRadius: SIZES.radius * 3,
             borderTopRightRadius: SIZES.radius * 3,
-            backgroundColor: "red",
+            backgroundColor: size === 'large' ? COLORS.primary : COLORS.light,
             height: 35,
             justifyContent: "center",
             alignItems: "center",
